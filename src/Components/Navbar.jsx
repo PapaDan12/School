@@ -1,9 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useAuth()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    navigate('/')
+  }
 
   return (
     <nav 
@@ -31,29 +36,27 @@ const Navbar = () => {
         <li className="inline-block mx-4 hover:text-amber-700">
           <Link to="/contact">Contact Us</Link>
         </li>
-
-        {isLoggedIn && (
-          <li className="inline-block mx-4 hover:text-amber-700">
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        )}
       </ul>
 
       {/* Auth Buttons */}
-      <div className='space-x-4'>
+      <div className="space-x-4">
         {!isLoggedIn ? (
           <>
             <Link to="/login">
-              <button className="bg-blue-500 text-white cursor-pointer px-4 py-2 rounded hover:bg-amber-700">Login</button>
+              <button className="bg-blue-500 text-white cursor-pointer px-4 py-2 rounded hover:bg-amber-700">
+                Login
+              </button>
             </Link>
             <Link to="/register">
-              <button className="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded hover:bg-amber-700">Register</button>
+              <button className="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded hover:bg-amber-700">
+                Register
+              </button>
             </Link>
           </>
         ) : (
-          <button
-            onClick={logout}
-            className="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded hover:bg-amber-700"
+          <button 
+            onClick={handleLogout} 
+            className="bg-red-500 text-white px-4 py-2 cursor-pointer rounded hover:bg-amber-700"
           >
             Logout
           </button>

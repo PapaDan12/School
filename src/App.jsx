@@ -1,33 +1,15 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom"
-import Navbar from "./Components/Navbar"
-import Home from "./Pages/Home"
-import About from "./Pages/About"
-import Courses from "./Pages/Courses"
-import Contact from "./Pages/Contact"
-import Login from "./Pages/Login"
-import Register from "./Pages/Register"
-import StudentDashboard from "./Pages/StudentDashboard"
-import AdminDashboard from "./Pages/AdminDashboard"
-import Footer from "./Components/Footer"
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const App = () => {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      </Routes>
-      <Footer />
-    </>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-100 to-amber-200">
+      <h1 className="text-4xl font-bold mb-6">Welcome to SchoolApp</h1>
+      <div className="space-x-4">
+        <Link to="/register" className="bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600">Register</Link>
+        <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</Link>
+      </div>
+    </div>
   )
 }
 
