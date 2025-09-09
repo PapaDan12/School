@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Body = () => {
   return (
-    <section className='flex flex-col md:flex-row items-center justify-between p-8 bg-[url(/public/BodyImg.avif)] text-white'>
+    <section className='flex flex-col md:flex-row items-center justify-between p-8 bg-[url(/BodyImg.avif)] text-white'>
       
       {/* Left Side - Hero Text */}
       <div className='flex flex-col items-center md:items-start text-center md:text-left mb-8 md:mb-0 w-full md:w-1/2'>        
@@ -22,11 +22,11 @@ const Body = () => {
               Get Started
             </button>
           </a>
-          <Link to="/courses">
+          <a href="#role-selection">
             <button className='bg-white text-blue-700 hover:bg-gray-100 px-6 py-3 rounded font-semibold shadow'>
               View Courses
             </button>
-          </Link>
+         </a>
         </div>
       </div> 
 

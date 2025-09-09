@@ -1,40 +1,120 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
-
-export default function StudentDashboard() {
-  const [user, setUser] = useState(null);
+const StudentDashboard = () => {
+  const [courses, setCourses] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    } else {
-      window.location.href = "/login";
+    // Debug user object on first load
+    const storedUser = JSON.parse(localStorage.getItem("user"))
+    console.log("Stored user object:", storedUser)
+
+    fetchCourses()
+  }, [])
+
+  const fetchCourses = async () => {
+    try {
+      const token = localStorage.getItem("accessToken")
+
+      const response = await fetch(
+        "https://sophisticated-eden-dr-white004-48b8c072.koyeb.app/api/courses/",
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
+
+      const data = await response.json()
+      console.log("Courses response:", response.status, data)
+
+      if (response.ok) {
+        setCourses(data.results || data)
+      } else {
+        setError(data.message || "Failed to load courses")
+      }
+    } catch (err) {
+      console.error(err)
+      setError("Something went wrong")
+    } finally {
+      setLoading(false)
     }
-  }, []);
+  }
+
+  const handleEnroll = async (courseId) => {
+    setError("")
+    setMessage("")
+
+    try {
+      const token = localStorage.getItem("accessToken")
+      const user = JSON.parse(localStorage.getItem("user"))
+
+      if (!user) {
+        setError("User not found. Please log in again.")
+        return
+      }
+
+      console.log("User before enrolling:", user)
+
+      const response = await fetch(
+        `https://sophisticated-eden-dr-white004-48b8c072.koyeb.app/api/courses/${courseId}/enroll/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            student: user.id // we’ll confirm this key from the logs
+          })
+        }
+      )
+
+      const data = await response.json()
+      console.log("Enroll response:", response.status, data)
+
+      if (response.ok) {
+        setMessage(`Enrolled successfully in ${data.course?.title || "course"}`)
+      } else {
+        setError(data.message || JSON.stringify(data))
+      }
+    } catch (err) {
+      console.error("Error enrolling:", err)
+      setError("Failed to enroll. Try again.")
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-    
-      <div className="p-8">
-        <h1 className="text-3xl font-bold mb-6">Student Dashboard</h1>
-        {user && <p className="mb-4">Welcome, {user.email}</p>}
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Student Dashboard</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 bg-white shadow rounded">
-            <h2 className="text-xl font-semibold mb-2">My Courses</h2>
-            <p>View and manage the courses you enrolled in.</p>
-          </div>
-          <div className="p-6 bg-white shadow rounded">
-            <h2 className="text-xl font-semibold mb-2">Available Tutors</h2>
-            <p>Browse tutors and the courses they offer.</p>
-          </div>
-          <div className="p-6 bg-white shadow rounded">
-            <h2 className="text-xl font-semibold mb-2">Certificates</h2>
-            <p>Download certificates for completed courses.</p>
-          </div>
-        </div>
-      </div>
+      {loading && <p>Loading courses...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      {message && <p className="text-green-600">{message}</p>}
+
+      {courses.length > 0 ? (
+        <ul className="space-y-3">
+          {courses.map((course) => (
+            <li key={course.id} className="p-4 border rounded bg-white shadow">
+              <h3 className="text-lg font-bold">{course.title}</h3>
+              <p className="text-sm text-gray-600">
+                Instructor: {course.instructor_name || "N/A"}
+              </p>
+              <p>{course.description}</p>
+              <button
+                onClick={() => handleEnroll(course.id)}
+                className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Enroll
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        !loading && <p>No courses available</p>
+      )}
     </div>
-  );
+  )
 }
+
+export default StudentDashboard
