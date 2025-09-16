@@ -1,9 +1,12 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { AnimatePresence, motion } from "framer-motion"
+
 import Login from "./Pages/Login"
 import AdminDashboard from "./Pages/AdminDashboard"
 import StudentDashboard from "./Pages/StudentDashboard"
+import CourseDetails from "./Pages/CourseDetails"
 import "./index.css"
 import Navbar from "./Components/Navbar"
 import Register from "./Pages/Register"
@@ -15,8 +18,12 @@ import Footer from "./Components/Footer"
 
 // helper to check authentication
 const getUser = () => {
-  const user = localStorage.getItem("user")
-  return user ? JSON.parse(user) : null
+  try {
+    const user = localStorage.getItem("user")
+    return user ? JSON.parse(user) : null
+  } catch (e) {
+    return null
+  }
 }
 
 // Protected route wrapper
@@ -28,7 +35,6 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   if (role && user.role !== role) {
-    // redirect to their correct dashboard if they try to access another role's page
     return user.role === "admin" ? (
       <Navigate to="/admin-dashboard" replace />
     ) : (
@@ -39,42 +45,75 @@ const ProtectedRoute = ({ children, role }) => {
   return children
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        {/* Public route */}
-        <Route path="/login" element={<Login />} />
+// Page wrapper with motion
+const PageWrapper = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.4 }}
+    className="min-h-screen"
+  >
+    {children}
+  </motion.div>
+)
 
-        {/* Student routes */}
+const AnimatedRoutes = () => {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* Public */}
+        <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
+        <Route path="/register" element={<PageWrapper><Register /></PageWrapper>} />
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+        <Route path="/courses" element={<PageWrapper><Courses /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+
+        {/* Student */}
         <Route
           path="/student-dashboard"
           element={
             <ProtectedRoute role="student">
-              <StudentDashboard />
+              <PageWrapper><StudentDashboard /></PageWrapper>
             </ProtectedRoute>
           }
         />
 
-        {/* Admin routes */}
+        {/* Admin */}
         <Route
           path="/admin-dashboard"
           element={
             <ProtectedRoute role="admin">
-              <AdminDashboard />
+              <PageWrapper><AdminDashboard /></PageWrapper>
             </ProtectedRoute>
           }
         />
 
-        {/* Default redirect */}
+        {/* Shared: course details */}
+        <Route
+          path="/course-details/:id"
+          element={
+            <ProtectedRoute>
+              <PageWrapper><CourseDetails /></PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Default */}
         <Route path="*" element={<Navigate to="/login" replace />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/contact" element={<Contact />} />
       </Routes>
+    </AnimatePresence>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Navbar />
+      <AnimatedRoutes />
       <Footer />
     </BrowserRouter>
   </React.StrictMode>
