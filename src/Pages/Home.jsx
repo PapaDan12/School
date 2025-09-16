@@ -10,7 +10,7 @@ const Home = () => {
       <Body />
 
       {/* Role Selection Section */}
-      <section className="p-16 text-center bg-red-500">
+      <section className="p-16 text-center bg-blue-200">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

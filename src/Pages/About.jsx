@@ -7,7 +7,7 @@ const About = () => {
     <>
       
       <div className="p-12 bg-[url(photo-2.avif)] bg-cover bg-center min-h-screen flex items-center justify-center">
-      <motion.p 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
@@ -15,7 +15,7 @@ const About = () => {
         className="text-2xl font-bold text-black-400"
       >
        
-     
+        <div className='bg-neutral-200 p-5 rounded-lg'>
         <h1 className="text-3xl font-bold mb-6">About Us</h1>
         <p className="mb-4">Edubox connects students with tutors and administrators who provide high-quality education.</p>
         
@@ -33,7 +33,8 @@ const About = () => {
         </ul>
         <p className="mt-6">We believe education transforms lives and are committed to making learning easy and effective for everyone.</p>
         <p className="mt-6">Join us on this journey to unlock potential through learning!</p>
-      </motion.p>
+        </div>
+      </motion.div>
       </div>
     
      

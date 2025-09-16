@@ -245,7 +245,9 @@ const renderContentPreview = (c) => {
 
 
   return (
-    <div className="p-6 max-w-4xl bg-neutral-300  mx-auto">
+    <>
+    <section className="bg-neutral-300 ">
+    <div className="p-12 max-w-4xl bg-blue-200 mx-auto">
       {error && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>}
       {message && <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">{message}</div>}
 
@@ -297,7 +299,7 @@ const renderContentPreview = (c) => {
           ) : (
             <ul className="space-y-3 ">
               {contents.map((c) => (
-                <li key={c.id} className="p-4 border rounded bg-white shadow-sm">
+                <li key={c.id} className="p-4 border rounded bg-neutral-300 shadow-sm">
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-semibold">{c.title}</p>
@@ -329,5 +331,7 @@ const renderContentPreview = (c) => {
         </>
       ) : <p>Course not found</p>}
     </div>
+    </section>
+    </>
   )
 }

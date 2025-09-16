@@ -5,7 +5,7 @@ import { BookOpenText, GiftIcon } from 'lucide-react'
 
 const Body = () => {
   return (
-    <section className='flex flex-col md:flex-row items-center justify-between p-8 bg-[url(/BodyImg.avif)] text-white'>
+    <section className='flex flex-col md:flex-row items-center justify-between p-8 bg-[url(/BodyImg.avif)] text-black'>
       
       {/* Left Side - Hero Text */}
       <motion.div 
