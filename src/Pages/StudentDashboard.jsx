@@ -89,7 +89,7 @@ const StudentDashboard = () => {
 
   return (
     <>
-        <section className="bg-[url(photo-3.avif)] bg-cover bg-center min-h-screen flex flex-col items-center justify-center py-12">
+        <section className="bg-[url(/photo-3.avif)] bg-cover bg-center min-h-screen flex flex-col items-center justify-center py-12">
     <div className="p-6 bg-amber-300  max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
         <BookOpen className="text-blue-600" /> Student Dashboard

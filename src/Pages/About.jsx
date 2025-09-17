@@ -6,7 +6,7 @@ const About = () => {
   return (
     <>
       
-      <div className="p-12 bg-[url(photo-2.avif)] bg-cover bg-center min-h-screen flex items-center justify-center">
+      <div className="p-12 bg-[url(/photo-2.avif)] bg-cover bg-center min-h-screen flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

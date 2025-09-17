@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 const Contact = () => {
   return (
     <>
-      <section className="min-h-screen bg-[url(photo-3.avif)] flex flex-col items-center justify-center  py-12">
+      <section className="min-h-screen bg-[url(/photo-3.avif)] flex flex-col items-center justify-center  py-12">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

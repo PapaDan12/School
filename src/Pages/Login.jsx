@@ -55,7 +55,7 @@ const Login = () => {
   return (
     <>
     <section 
-      className="min-h-screen bg-[url(photo-3.avif)] flex flex-col items-center justify-center  py-12">
+      className="min-h-screen bg-[url(/photo-3.avif)] flex flex-col items-center justify-center  py-12">
     <div className="p-12 max-w-md mx-auto bg-blue-200 mt-5 rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-6">Login</h1>
       {error && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>}
