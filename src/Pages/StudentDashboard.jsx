@@ -108,7 +108,7 @@ const StudentDashboard = () => {
       {/* My Courses */}
       <h2 className="text-2xl font-semibold mb-4">My Courses</h2>
       {approvedEnrollments.length > 0 ? (
-        <div className="grid bg-[url(photo-1.jpg)] p-10 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div className="grid bg-[url(/photo-1.jpg)] p-10 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {approvedEnrollments.map((en, i) => {
             const course = courses.find((c) => c.id === en.course)
             if (!course) return null
@@ -150,7 +150,7 @@ const StudentDashboard = () => {
 
       {/* Available Courses */}
       <h2 className="text-2xl font-semibold mb-4">Available Courses</h2>
-      <div className="grid bg-[url(photo-2.avif)] p-12 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid bg-[url(/photo-2.avif)] p-12 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course, i) => {
           const enrollment = enrollments.find((en) => en.course === course.id)
           const status = enrollment?.status || null
