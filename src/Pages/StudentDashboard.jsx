@@ -108,7 +108,7 @@ const StudentDashboard = () => {
       {/* My Courses */}
       <h2 className="text-2xl font-semibold mb-4">My Courses</h2>
       {approvedEnrollments.length > 0 ? (
-        <div className="grid bg-[url(photo-1.avif)] p-10 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div className="grid bg-[url(photo-1.jpg)] p-10 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {approvedEnrollments.map((en, i) => {
             const course = courses.find((c) => c.id === en.course)
             if (!course) return null
