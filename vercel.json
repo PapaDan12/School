@@ -1,5 +1,13 @@
 {
-    "rewrites": [
-        { "source": "/(.*)", "destination": "/"}
-    ]
+  "headers": [
+    {
+      "source": "/(.*)\\.avif",
+      "headers": [
+        { "key": "Content-Type", "value": "image/avif" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination":"/"}
+  ]
 }
