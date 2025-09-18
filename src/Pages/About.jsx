@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Target, Lightbulb, Globe, User, Linkedin, Github, Twitter } from "lucide-react";
 
 const teamMembers = [
-  { name: "Iwu Constantine", role: "Project Lead", bio: "Oversees development and ensures smooth execution of edu/manager.", social: { linkedin: "#", github: "#", twitter: "#" } },
-  { name: "Daniel Tobi", role: "Frontend Developer", bio: "Specializes in building clean, user-friendly interfaces for students and admins.", social: { linkedin: "#", github: "#", twitter: "#" } },
-  { name: "Lifted Simon", role: "Backend Engineer", bio: "Designs and manages the course and enrollment database systems.", social: { linkedin: "#", github: "#", twitter: "#" } },
-  { name: "Micheal Igwe", role: "UI/UX Designer", bio: "Creates intuitive layouts that simplify learning and administration.", social: { linkedin: "#", github: "#", twitter: "#" } },
+  { name: "Ademola Abdulkareem", role: "Project Lead & Backend Engineer", bio: "Oversees development and ensures smooth execution of edu/manager.", social: { linkedin: "#", github: "#", twitter: "#" } },
+  { name: "Daniel Tobiloba", role: "Frontend Lead", bio: "Specializes in building clean, user-friendly interfaces for students and admins.", social: { linkedin: "#", github: "#", twitter: "#" } },
+  { name: "Lifted Simon", role: "Frontend Developer", bio: "Designs and manages the course and enrollment database systems.", social: { linkedin: "#", github: "#", twitter: "#" } },
+  { name: "Joshua Ladejebi", role: "Frontend Developer", bio: "Creates intuitive layouts that simplify learning and administration.", social: { linkedin: "#", github: "#", twitter: "#" } },
 ];
 
 const staggerContainer = {

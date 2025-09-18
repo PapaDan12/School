@@ -1,10 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { motion } from "framer-motion"
-import { LogOut, LogIn, UserPlus, GraduationCap, Home, BookOpen, Phone, Info } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { 
+  LogOut, LogIn, UserPlus, GraduationCap, 
+  Home, BookOpen, Phone, Info, Menu, X 
+} from "lucide-react"
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
   const token = localStorage.getItem("accessToken")
   let user = null
@@ -39,7 +43,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Links */}
+      {/* Desktop Links */}
       <ul className="hidden md:flex items-center gap-6 font-medium">
         <li className="flex items-center gap-1 hover:text-amber-600 transition">
           <Home size={18} />
@@ -73,8 +77,8 @@ const Navbar = () => {
         )}
       </ul>
 
-      {/* Auth Buttons */}
-      <div className="flex gap-3">
+      {/* Auth Buttons - Desktop */}
+      <div className="hidden md:flex gap-3">
         {!isLoggedIn ? (
           <>
             <Link to="/login">
@@ -107,6 +111,86 @@ const Navbar = () => {
           </motion.button>
         )}
       </div>
+
+      {/* Mobile Hamburger */}
+      <div className="md:hidden">
+        <button onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-16 left-0 w-full bg-white shadow-md p-4 flex flex-col gap-4 md:hidden z-40"
+          >
+            <Link to="/" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+              <Home size={18} /> Home
+            </Link>
+            <Link to="/about" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+              <Info size={18} /> About Us
+            </Link>
+            <Link to="/courses" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+              <BookOpen size={18} /> Courses
+            </Link>
+            <Link to="/contact" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+              <Phone size={18} /> Contact Us
+            </Link>
+
+            {isLoggedIn && role === "admin" && (
+              <Link to="/admin-dashboard" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+                <GraduationCap size={18} /> Admin Dashboard
+              </Link>
+            )}
+            {isLoggedIn && role === "student" && (
+              <Link to="/student-dashboard" className="flex items-center gap-2 hover:text-amber-600" onClick={() => setIsOpen(false)}>
+                <GraduationCap size={18} /> Student Dashboard
+              </Link>
+            )}
+
+            {/* Auth Buttons - Mobile */}
+            {!isLoggedIn ? (
+              <>
+                <Link to="/login" onClick={() => setIsOpen(false)}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full flex items-center justify-center gap-1 bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+                  >
+                    <LogIn size={16} /> Login
+                  </motion.button>
+                </Link>
+                <Link to="/register" onClick={() => setIsOpen(false)}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full flex items-center justify-center gap-1 bg-amber-500 text-white px-4 py-2 rounded shadow hover:bg-amber-600 transition"
+                  >
+                    <UserPlus size={16} /> Register
+                  </motion.button>
+                </Link>
+              </>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  handleLogout()
+                  setIsOpen(false)
+                }}
+                className="w-full flex items-center justify-center gap-1 bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 transition"
+              >
+                <LogOut size={16} /> Logout
+              </motion.button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
